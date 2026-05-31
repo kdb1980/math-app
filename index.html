@@ -22,15 +22,39 @@
 </head>
 <body>
 
+<!-- ===== 로그인 화면 ===== -->
+<div id="screen-login" class="screen active">
+  <div class="login-container">
+    <div class="logo-area">
+      <div class="logo-emoji">📐</div>
+      <h1 class="logo-title">수학 마스터</h1>
+      <p class="logo-sub">중학교 수학 레벨업 챌린지</p>
+    </div>
+    <div class="login-box">
+      <div class="login-error" id="login-error" style="display:none;"></div>
+      <div class="input-group">
+        <label class="input-label">이메일</label>
+        <input type="email" id="login-email" class="text-input" placeholder="이메일 입력" autocomplete="email" />
+      </div>
+      <div class="input-group">
+        <label class="input-label">비밀번호</label>
+        <input type="password" id="login-password" class="text-input" placeholder="비밀번호 입력" autocomplete="current-password" />
+      </div>
+      <button class="btn-primary" id="btn-login">로그인</button>
+    </div>
+    <p class="login-hint">아이 계정이 없으면 아빠에게 문의하세요 😊</p>
+  </div>
+</div>
+
 <!-- ===== 시작 화면 ===== -->
-<div id="screen-start" class="screen active">
+<div id="screen-start" class="screen">
   <div class="start-container">
     <div class="logo-area">
       <div class="logo-emoji">📐</div>
       <h1 class="logo-title">수학 마스터</h1>
       <p class="logo-sub">중학교 수학 레벨업 챌린지</p>
     </div>
-    <div class="player-info-box" id="player-info-box">
+    <div class="player-info-box">
       <div class="player-level-badge" id="start-level-badge">Lv.1</div>
       <div class="player-stats">
         <div class="stat-row"><span>현재 단원</span><span id="start-unit-name">중1 · 1학기</span></div>
@@ -40,53 +64,47 @@
     </div>
     <button class="btn-primary" id="btn-start">학습 시작! 🚀</button>
     <button class="btn-install" id="btn-install" style="display:none;">📲 앱으로 설치하기</button>
-    <button class="btn-secondary" id="btn-reset">처음부터 시작</button>
+    <button class="btn-secondary" id="btn-logout">로그아웃</button>
   </div>
 </div>
 
 <!-- ===== 문제 풀이 화면 ===== -->
 <div id="screen-quiz" class="screen">
-
-  <!-- 상단 헤더 -->
   <div class="quiz-header">
     <div class="header-left">
       <div class="level-badge" id="level-badge">Lv.1</div>
       <div class="unit-label" id="unit-label">중1 · 1학기</div>
     </div>
     <div class="header-center">
-      <div class="streak-display" id="streak-display">
+      <div class="streak-display">
         <span class="streak-fire">🔥</span>
         <span id="streak-count">0</span>
       </div>
     </div>
     <div class="header-right">
-      <button class="btn-home" id="btn-home" title="홈으로">🏠</button>
+      <button class="btn-home" id="btn-home">🏠</button>
     </div>
   </div>
 
-  <!-- XP 바 -->
   <div class="xp-bar-container">
     <div class="xp-bar-track">
       <div class="xp-bar-fill" id="xp-bar-fill"></div>
     </div>
-    <div class="xp-label" id="xp-label">XP 0 / 100</div>
+    <div class="xp-label" id="xp-label">XP 0 / 200</div>
   </div>
 
-  <!-- 단원 진행 -->
   <div class="chapter-progress">
     <span id="chapter-name">소인수분해</span>
     <div class="chapter-dots" id="chapter-dots"></div>
     <span id="chapter-progress-text">0 / 0 마스터</span>
   </div>
 
-  <!-- 문제 카드 -->
   <div class="question-card" id="question-card">
-    <div class="question-tag" id="question-tag">소수와 합성수</div>
+    <div class="question-tag" id="question-tag"></div>
     <div class="question-type-badge" id="review-badge" style="display:none;">🔄 복습</div>
-    <div class="question-text" id="question-text">문제가 로딩 중...</div>
+    <div class="question-text" id="question-text"></div>
   </div>
 
-  <!-- 보기 영역 -->
   <div class="choices-area" id="choices-area">
     <button class="choice-btn" data-idx="0"></button>
     <button class="choice-btn" data-idx="1"></button>
@@ -94,13 +112,11 @@
     <button class="choice-btn" data-idx="3"></button>
   </div>
 
-  <!-- 단답형 입력 -->
   <div class="short-answer-area" id="short-answer-area" style="display:none;">
-    <input type="text" id="short-answer-input" class="short-input" placeholder="답을 입력하세요" />
+    <input type="text" id="short-answer-input" class="short-input" placeholder="답을 입력하세요" inputmode="numeric" />
     <button class="btn-submit" id="btn-submit">확인 ✓</button>
   </div>
 
-  <!-- 피드백 영역 -->
   <div class="feedback-area" id="feedback-area" style="display:none;">
     <div class="feedback-icon" id="feedback-icon"></div>
     <div class="feedback-text" id="feedback-text"></div>
@@ -113,7 +129,6 @@
       <button class="btn-next" id="btn-next">다음 문제 →</button>
     </div>
   </div>
-
 </div>
 
 <!-- ===== 단원 완료 / 쿠폰 화면 ===== -->
@@ -123,25 +138,18 @@
     <div class="complete-emoji" id="complete-emoji">🎉</div>
     <h2 class="complete-title" id="complete-title">단원 완료!</h2>
     <p class="complete-subtitle" id="complete-subtitle"></p>
-
-    <!-- 쿠폰 -->
     <div class="coupon-card" id="coupon-card" style="display:none;">
-      <div class="coupon-top">
-        <span class="coupon-label">🎁 보상 쿠폰 획득!</span>
-      </div>
+      <div class="coupon-top">🎁 보상 쿠폰 획득!</div>
       <div class="coupon-emoji" id="coupon-emoji">🍕</div>
-      <div class="coupon-text" id="coupon-text">아빠한테 피자 사달라고 하기</div>
+      <div class="coupon-text" id="coupon-text"></div>
       <div class="coupon-date" id="coupon-date"></div>
       <div class="coupon-no-expire">유효기간 없음 ♾️</div>
     </div>
-
-    <!-- 통계 -->
     <div class="complete-stats">
       <div class="stat-box"><div class="stat-num" id="c-correct">0</div><div class="stat-lbl">정답</div></div>
       <div class="stat-box"><div class="stat-num" id="c-accuracy">0%</div><div class="stat-lbl">정답률</div></div>
       <div class="stat-box"><div class="stat-num" id="c-streak">0</div><div class="stat-lbl">최고 스트릭</div></div>
     </div>
-
     <button class="btn-primary" id="btn-continue">계속하기 🚀</button>
   </div>
 </div>
@@ -154,6 +162,21 @@
     <div class="levelup-badge" id="levelup-badge">Lv.2</div>
     <div class="levelup-desc" id="levelup-desc">중1 · 2학기로 진급!</div>
     <button class="btn-primary" id="btn-levelup-continue">계속하기 🎮</button>
+  </div>
+</div>
+
+<!-- ===== 관리자 대시보드 ===== -->
+<div id="screen-admin" class="screen">
+  <div class="admin-header">
+    <h2 class="admin-title">📊 관리자 대시보드</h2>
+    <button class="btn-secondary admin-logout" id="btn-admin-logout">로그아웃</button>
+  </div>
+  <div class="admin-body">
+    <div class="admin-loading" id="admin-loading">학생 데이터 불러오는 중...</div>
+    <div class="student-list" id="student-list"></div>
+    <div class="admin-empty" id="admin-empty" style="display:none;">
+      아직 학습한 학생이 없습니다.
+    </div>
   </div>
 </div>
 
@@ -173,6 +196,6 @@
 <button class="fab-coupon" id="fab-coupon" title="쿠폰 보관함">🎁</button>
 
 <script src="js/questions.js"></script>
-<script src="js/app.js"></script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>
