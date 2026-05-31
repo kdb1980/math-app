@@ -21,7 +21,7 @@
 }
 
 html {
-  font-size: 15px; /* 360px 기준 베이스 */
+  font-size: 19.5px; /* 15px × 1.3 = 19.5px */
 }
 
 body {
@@ -124,7 +124,8 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
   min-height: 52px; /* 터치 타겟 */
 }
-.btn-primary:active { transform: scale(0.98); }
+.btn-primary:active { animation: btnPress 0.2s ease; }
+@keyframes btnPress { 0% { transform: scale(1); } 50% { transform: scale(0.94); } 100% { transform: scale(1); } }
 
 .btn-secondary {
   width: 100%;
@@ -314,7 +315,7 @@ body {
 .choice-btn:active:not(:disabled) {
   border-color: var(--primary);
   background: rgba(0,71,171,0.06);
-  transform: scale(0.97);
+  animation: btnPress 0.2s ease;
 }
 .choice-btn.correct {
   border-color: var(--success);
@@ -415,7 +416,7 @@ body {
   min-height: 44px;
   flex: 1;
 }
-.btn-next:active { transform: scale(0.97); }
+.btn-next:active { animation: btnPress 0.2s ease; }
 
 /* ===== 완료 화면 ===== */
 #screen-complete {
@@ -585,17 +586,21 @@ body {
   position: fixed;
   bottom: 20px;
   right: 16px;
-  width: 48px; height: 48px;
+  width: 52px; height: 52px;
   border-radius: 50%;
   background: var(--primary);
   border: none;
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
   box-shadow: 0 3px 14px rgba(0,71,171,0.3);
-  transition: transform 0.15s;
   z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
 }
-.fab-coupon:active { transform: scale(0.92); }
+.fab-coupon:active { animation: btnPress 0.2s ease; }
 
 /* ===== 정답 효과 ===== */
 .correct-flash { animation: correctFlash 0.4s ease; }
