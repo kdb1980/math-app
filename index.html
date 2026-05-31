@@ -192,6 +192,27 @@
   </div>
 </div>
 
+<!-- ===== 진도 초기화 확인 모달 ===== -->
+<div id="reset-modal" class="modal" style="display:none;">
+  <div class="modal-content reset-modal-content">
+    <div class="reset-modal-icon">⚠️</div>
+    <h3 class="reset-modal-title">진도 초기화</h3>
+    <p class="reset-modal-desc">
+      <strong id="reset-modal-email"></strong> 학생의<br>
+      모든 학습 진도, XP, 쿠폰이<br>
+      <span class="reset-warn">완전히 삭제됩니다.</span><br><br>
+      정말 초기화하시겠습니까?
+    </p>
+    <div class="reset-modal-buttons">
+      <button class="btn-reset-cancel" id="btn-reset-cancel">취소</button>
+      <button class="btn-reset-confirm" id="btn-reset-confirm">네, 초기화합니다</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 토스트 알림 ===== -->
+<div id="toast" class="toast"></div>
+
 <!-- ===== 플로팅 버튼 ===== -->
 <button class="fab-coupon" id="fab-coupon" title="쿠폰 보관함">🎁</button>
 

@@ -761,6 +761,86 @@ body {
   transition: width 0.5s ease;
 }
 
+/* ===== 진도 초기화 버튼 ===== */
+.btn-reset-progress {
+  width: 100%;
+  margin-top: 12px;
+  padding: 11px;
+  border: 1.5px solid var(--danger);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--danger);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: background 0.15s;
+}
+.btn-reset-progress:active { animation: btnPress 0.2s ease; background: rgba(192,57,43,0.07); }
+
+/* ===== 리셋 확인 모달 ===== */
+.reset-modal-content {
+  text-align: center;
+  padding: 28px 20px;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.reset-modal-icon { font-size: 2.5rem; margin-bottom: 8px; }
+.reset-modal-title { font-size: 1rem; font-weight: 900; margin-bottom: 14px; color: var(--text); }
+.reset-modal-desc { font-size: 0.75rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 20px; }
+.reset-warn { color: var(--danger); font-weight: 700; }
+.reset-modal-buttons { display: flex; gap: 10px; }
+.btn-reset-cancel {
+  flex: 1;
+  padding: 13px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  min-height: 48px;
+}
+.btn-reset-confirm {
+  flex: 1;
+  padding: 13px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--danger);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  min-height: 48px;
+}
+.btn-reset-confirm:active, .btn-reset-cancel:active { animation: btnPress 0.2s ease; }
+.btn-reset-confirm:disabled { opacity: 0.6; cursor: default; }
+
+/* ===== 토스트 알림 ===== */
+.toast {
+  position: fixed;
+  bottom: 84px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1e293b;
+  color: white;
+  padding: 11px 20px;
+  border-radius: 24px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 200;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* 수식 스타일 */
 .katex { font-size: 1em; }
 

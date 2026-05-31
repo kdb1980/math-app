@@ -66,6 +66,33 @@ export async function loadProgress(userId) {
   }
 }
 
+// ── 관리자: 학생 진도 초기화 ─────────────────────
+
+export async function resetStudentProgress(userId) {
+  try {
+    await setDoc(doc(db, "progress", userId), {
+      unitIdx: 0,
+      xp: 0,
+      maxXp: 200,
+      streak: 0,
+      bestStreak: 0,
+      totalCorrect: 0,
+      totalAnswered: 0,
+      typeMastery: {},
+      masteredTypes: [],
+      reviewPool: [],
+      coupons: [],
+      completedUnits: [],
+      email: '',
+      updatedAt: new Date().toISOString(),
+    });
+    return true;
+  } catch (e) {
+    console.warn("진도 초기화 실패:", e.message);
+    return false;
+  }
+}
+
 // ── 관리자: 전체 학생 진도 조회 ──────────────────
 
 export async function loadAllProgress() {

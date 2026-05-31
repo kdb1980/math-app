@@ -3,7 +3,7 @@
 // ===================================================
 
 import { auth, db, login, logout, onAuthChange, isAdmin,
-         saveProgress, loadProgress, loadAllProgress, ADMIN_EMAIL }
+         saveProgress, loadProgress, loadAllProgress, resetStudentProgress, ADMIN_EMAIL }
   from './firebase.js';
 
 // ── 상태 ────────────────────────────────────────────
@@ -373,9 +373,30 @@ async function renderAdminDashboard() {
         </div>
       </div>
       <div class="student-updated">마지막 학습: ${updated} · 획득 쿠폰: ${(p.coupons||[]).length}개</div>
+      <button class="btn-reset-progress" data-uid="${p.id}" data-email="${p.email || p.id}">
+        🔄 진도 초기화
+      </button>
     `;
     list.appendChild(card);
   });
+}
+
+// ── 리셋 확인 모달 ────────────────────────────────────
+
+function showResetConfirm(uid, email) {
+  const modal = document.getElementById('reset-modal');
+  modal.dataset.uid = uid;
+  document.getElementById('reset-modal-email').textContent = email;
+  modal.style.display = 'flex';
+}
+
+// ── 토스트 알림 ───────────────────────────────────────
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2800);
 }
 
 // ── 인증 흐름 ────────────────────────────────────────
@@ -466,6 +487,37 @@ document.addEventListener('DOMContentLoaded', () => {
     showScreen('quiz');
     updateXpBar(); updateStreak();
     renderQuestion();
+  });
+
+  // 관리자: 진도 초기화 버튼 (이벤트 위임)
+  document.getElementById('student-list').addEventListener('click', async (e) => {
+    const btn = e.target.closest('.btn-reset-progress');
+    if (!btn) return;
+    const uid = btn.dataset.uid;
+    const email = btn.dataset.email;
+    showResetConfirm(uid, email);
+  });
+
+  // 리셋 확인 모달 버튼
+  document.getElementById('btn-reset-confirm').addEventListener('click', async () => {
+    const uid = document.getElementById('reset-modal').dataset.uid;
+    const btn = document.getElementById('btn-reset-confirm');
+    btn.textContent = '초기화 중...';
+    btn.disabled = true;
+    const ok = await resetStudentProgress(uid);
+    document.getElementById('reset-modal').style.display = 'none';
+    if (ok) {
+      showToast('✅ 진도가 초기화되었습니다.');
+      await renderAdminDashboard();
+    } else {
+      showToast('❌ 초기화에 실패했습니다. 다시 시도해주세요.');
+    }
+    btn.textContent = '네, 초기화합니다';
+    btn.disabled = false;
+  });
+
+  document.getElementById('btn-reset-cancel').addEventListener('click', () => {
+    document.getElementById('reset-modal').style.display = 'none';
   });
 
   // 쿠폰 FAB
